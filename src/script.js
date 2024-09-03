@@ -1,4 +1,4 @@
-import { greet } from "../utils/utils";
+import { greet } from "../utils/utils.js";
 
 function loadGreet(name) {
   const doomGreet = document.getElementById("greeting");
