@@ -6,3 +6,9 @@ function loadGreet(name) {
 }
 
 loadGreet("Costi");
+
+function clearAllProducts() {
+  localStorage.setItem("products", "");
+}
+
+document.getElementById("clearAll").addEventListener("click", clearAllProducts);
