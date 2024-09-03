@@ -44,3 +44,38 @@ describe("Utils functions", () => {
     );
   });
 });
+
+describe("Custom tests", () =>  {
+    const shoppingList = [
+        "diapers",
+        "kleenex",
+        "trash bags",
+        "paper towels",
+        "milk",
+      ];
+
+      test("The shopiing list has milk on it", () => {
+        expect(shoppingList).toContain("milk")
+      })
+
+      async function fetchData() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve("Data has received")
+            }, 2000)
+        })
+      }
+      //await / async
+      test("fetchData returns data has received with await", async () => {
+        const data = await fetchData();
+        expect(data).toBe("Data has received")
+      })
+      //Promise .then
+      test("fetchData returns data has received with .then", () => {
+        return fetchData().then((data) => {
+            expect(data).toBe("Data has received")
+        } )
+      })
+
+
+})
