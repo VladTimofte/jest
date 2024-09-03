@@ -1,4 +1,4 @@
-import { greet, multiply, createProductObject, updateLocalStorage } from "../utils/utils.js";
+import { add, greet, multiply, createProductObject, updateLocalStorage } from "../utils/utils.js";
 
 function loadGreet(name) {
   const doomGreet = document.getElementById("greeting");
@@ -8,7 +8,8 @@ function loadGreet(name) {
 loadGreet("Costi");
 
 function clearAllProducts() {
-  localStorage.setItem("products", "");
+    localStorage.removeItem("products");
+    updateProductTable();
 }
 
 function addProduct(event) {
@@ -27,7 +28,7 @@ function addProduct(event) {
       totalPrice
     );
 
-    let lsProducts = JSON?.parse(localStorage.getItem("products")) || [];
+    let lsProducts = JSON.parse(localStorage.getItem("products")) || [];
     lsProducts.push(product);
     updateLocalStorage(lsProducts)
 
@@ -53,7 +54,22 @@ function addProduct(event) {
 
         productTableBody.appendChild(row)
     })
+    calculateTotalPriceOfProducts()
+  }
+
+  function calculateTotalPriceOfProducts() {
+    const products = JSON.parse(localStorage.getItem("products")) || [];
+    const domTotalPriceProducts = document.querySelector(
+      ".total-price-of-products-wrapper .price"
+    );
+    let totalPrice = 0;
+    for (let i = 0; i < products.length; i++) {
+      totalPrice = add(totalPrice, products[i].totalPrice)
+    }
+    domTotalPriceProducts.innerHTML = totalPrice;
   }
 
 document.getElementById("clearAll").addEventListener("click", clearAllProducts);
 document.getElementById("productForm").addEventListener("submit", addProduct);
+
+updateProductTable();
