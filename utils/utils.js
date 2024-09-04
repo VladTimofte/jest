@@ -43,3 +43,10 @@ export async function fetchData() {
       }, 500)
   })
 }
+
+export function fetchDataWithCallback(callback) {
+  setTimeout(() => {
+    const data = "Data has been fetched";
+    callback(data);
+  }, 1000); // Simulate an asynchronous operation with a 1-second delay
+}

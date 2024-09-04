@@ -5,7 +5,8 @@ import {
   createProductObject,
   increment,
   reset,
-  fetchData
+  fetchData,
+  fetchDataWithCallback,
 } from "../utils/utils.js";
 
 describe("Utils functions", () => {
@@ -47,47 +48,62 @@ describe("Utils functions", () => {
   });
 });
 
-describe("Custom tests", () =>  {
-    const shoppingList = [
-        "diapers",
-        "kleenex",
-        "trash bags",
-        "paper towels",
-        "milk",
-      ];
+describe("Custom tests", () => {
+  const shoppingList = [
+    "diapers",
+    "kleenex",
+    "trash bags",
+    "paper towels",
+    "milk",
+  ];
 
-      test("The shopiing list has milk on it", () => {
-        expect(shoppingList).toContain("milk")
-      })
+  test("The shopiing list has milk on it", () => {
+    expect(shoppingList).toContain("milk");
+  });
 
-      //await / async
-      test("fetchData returns data has received with await", async () => {
-        const data = await fetchData();
-        expect(data).toBe("Data has received")
-      })
-      //Promise .then
-      test("fetchData returns data has received with .then", () => {
-        return fetchData().then((data) => {
-            expect(data).toBe("Data has received")
-        } )
-      })
+  //await / async
+  test("fetchData returns data has received with await", async () => {
+    const data = await fetchData();
+    expect(data).toBe("Data has received");
+  });
+  //Promise .then
+  test("fetchData returns data has received with .then", () => {
+    return fetchData().then((data) => {
+      expect(data).toBe("Data has received");
+    });
+  });
 
-      beforeEach(() => {
-        // Reset the counter before each test
-        reset();
-      });
-      
-      afterEach(() => {
-        // Log the counter value after each test (or perform any necessary cleanup)
-        console.log(`Counter after test: ${reset()}`);
-      });
-      
-      test('should start counter at 1 after first increment', () => {
-        expect(increment()).toBe(1);
-      });
-      
-      test('should increment counter to 2', () => {
-        increment(); // counter becomes 1
-        expect(increment()).toBe(2); // counter becomes 2
-      });
-})
+  test("calls the callback with the correct data", (done) => {
+    function callback(data) {
+      try {
+        expect(data).toBe("Data has been fetched");
+        done(); // Indicate that the test is complete
+      } catch (error) {
+        done(error); // Indicate an error occurred
+      }
+    }
+
+    fetchDataWithCallback(callback);
+  });
+});
+
+describe("Hooks", () => {
+  beforeEach(() => {
+    // Reset the counter before each test
+    reset();
+  });
+
+  afterEach(() => {
+    // Log the counter value after each test (or perform any necessary cleanup)
+    console.log(`Counter after test: ${reset()}`);
+  });
+
+  test("should start counter at 1 after first increment", () => {
+    expect(increment()).toBe(1);
+  });
+
+  test("should increment counter to 2", () => {
+    increment(); // counter becomes 1
+    expect(increment()).toBe(2); // counter becomes 2
+  });
+});
