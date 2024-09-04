@@ -23,3 +23,23 @@ export function createProductObject(
     totalPrice: Math.abs(totalPrice),
   };
 }
+
+let counter = 0;
+
+export function increment() {
+  counter++;
+  return counter;
+}
+
+export function reset() {
+  counter = 0;
+  return counter;
+}
+
+export async function fetchData() {
+  return new Promise((resolve) => {
+      setTimeout(() => {
+          resolve("Data has received")
+      }, 500)
+  })
+}

@@ -3,7 +3,9 @@ import {
   greet,
   multiply,
   createProductObject,
-  updateLocalStorage,
+  increment,
+  reset,
+  fetchData
 } from "../utils/utils.js";
 
 describe("Utils functions", () => {
@@ -58,13 +60,6 @@ describe("Custom tests", () =>  {
         expect(shoppingList).toContain("milk")
       })
 
-      async function fetchData() {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve("Data has received")
-            }, 2000)
-        })
-      }
       //await / async
       test("fetchData returns data has received with await", async () => {
         const data = await fetchData();
@@ -76,4 +71,23 @@ describe("Custom tests", () =>  {
             expect(data).toBe("Data has received")
         } )
       })
+
+      beforeEach(() => {
+        // Reset the counter before each test
+        reset();
+      });
+      
+      afterEach(() => {
+        // Log the counter value after each test (or perform any necessary cleanup)
+        console.log(`Counter after test: ${reset()}`);
+      });
+      
+      test('should start counter at 1 after first increment', () => {
+        expect(increment()).toBe(1);
+      });
+      
+      test('should increment counter to 2', () => {
+        increment(); // counter becomes 1
+        expect(increment()).toBe(2); // counter becomes 2
+      });
 })
