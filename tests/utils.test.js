@@ -76,6 +76,4 @@ describe("Custom tests", () =>  {
             expect(data).toBe("Data has received")
         } )
       })
-
-
 })
