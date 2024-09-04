@@ -88,6 +88,7 @@ describe("Custom tests", () => {
 });
 
 describe("Hooks", () => {
+  
   beforeEach(() => {
     // Reset the counter before each test
     reset();
